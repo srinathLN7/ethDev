@@ -1,14 +1,7 @@
-const token = artifacts.require("MyToken");
-
-var chai = require("chai");
+const token = artifacts.require('MyToken');
+const chai = require('./setup_chai.js');
+const expect = chai.expect
 const BN = web3.utils.BN;
-const chaiBN = require("chai-bn")(BN);
-chai.use(chaiBN);
-
-var chaiAsPromised = require("chai-as-promised");
-chai.use(chaiAsPromised);
-
-const expect = chai.expect;
 
 require('dotenv').config({path: '../.env'});
 
@@ -27,7 +20,7 @@ contract("Token Test", async accounts => {
     it("Total supply should be in minters account", async () => {
         let instance = this.myToken;
         let totalSupply = await instance.totalSupply();
-        await expect(instance.balanceOf(initialHolder)).to.eventually.be.a.bignumber.equal(totalSupply);
+        return expect(instance.balanceOf(initialHolder)).to.eventually.be.a.bignumber.equal(totalSupply);
 
         //let balance = await instance.balanceOf.call(initialHolder);
         //assert.equal(balance.valueOf(), 0, "Account 1 has a balance");
@@ -43,7 +36,7 @@ contract("Token Test", async accounts => {
         // After transfer
         await expect(instance.transfer(recipient, sendTokens)).to.be.eventually.fulfilled;
         await expect(instance.balanceOf(initialHolder)).to.be.eventually.be.a.bignumber.equal(totalSupply.sub(new BN(sendTokens)));
-        await expect(instance.balanceOf(recipient)).to.be.eventually.be.a.bignumber.equal(new BN(sendTokens));
+        return expect(instance.balanceOf(recipient)).to.eventually.be.a.bignumber.equal(new BN(sendTokens));
     });
 
 
@@ -52,7 +45,7 @@ contract("Token Test", async accounts => {
         let balanceOfAccount = await instance.balanceOf(initialHolder);
         
         await expect(instance.transfer(recipient, balanceOfAccount+ new BN(1))).to.be.eventually.rejected;
-        await expect(instance.balanceOf(initialHolder)).to.eventually.be.a.bignumber.equal(balanceOfAccount);
+        return expect(instance.balanceOf(initialHolder)).to.eventually.be.a.bignumber.equal(balanceOfAccount);
     });
 
 
