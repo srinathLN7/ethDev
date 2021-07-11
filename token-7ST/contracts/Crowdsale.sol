@@ -183,7 +183,10 @@ contract Crowdsale is Context, ReentrancyGuard {
      * @param beneficiary Address performing the token purchase
      * @param tokenAmount Number of tokens to be emitted
      */
-    function _deliverTokens(address beneficiary, uint256 tokenAmount) internal virtual {
+    function _deliverTokens(address beneficiary, uint256 tokenAmount)
+        internal
+        virtual
+    {
         _token.safeTransfer(beneficiary, tokenAmount);
     }
 
