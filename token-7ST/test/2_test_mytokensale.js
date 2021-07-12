@@ -40,7 +40,7 @@ contract("Token Sale test", async accounts => {
         // Since kyc is not set to be completed yet - promise is expected to be rejected
         await  expect(tokenSaleInstance.sendTransaction({from: recipient, value: web3.utils.toWei("1", "wei")})).to.be.rejected;
         
-        await kycInstance.setKYCCompleted(recipient);
+        await kycInstance.setKYCComplete(recipient);
         await  expect(tokenSaleInstance.sendTransaction({from: recipient, value: web3.utils.toWei("1", "wei")})).to.be.fulfilled;
         return expect(_balanceBeforeInRecipientAcc.add(new BN(1))).to.be.a.bignumber.equal(await tokenInstance.balanceOf(recipient)); 
     });
