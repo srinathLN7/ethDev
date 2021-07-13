@@ -13,10 +13,18 @@ module.exports = {
       network_id: "1337",
       host: "127.0.0.1"
       },
-      ganache_local: {
+    ganache_local: {
       provider: () => { return new HDWalletProvider(process.env.MNEMONIC, "http://127.0.0.1:7545", MetaMaskAccountIndex)},
       network_id: "1337"  
-     } 
+     },
+    ropsten_infura: {
+      provider: () => { return new HDWalletProvider(process.env.MNEMONIC, "https://ropsten.infura.io/v3/449182ee3430450481b7ae0780d57632", MetaMaskAccountIndex)},
+      network_id: 3
+      },
+    goerli_infura: {
+      provider: () => { return new HDWalletProvider(process.env.MNEMONIC, "https://goerli.infura.io/v3/449182ee3430450481b7ae0780d57632", MetaMaskAccountIndex)},
+      network_id: 5
+      } 
   },
   compilers: {
     solc: {
